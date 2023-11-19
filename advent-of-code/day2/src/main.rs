@@ -7,19 +7,25 @@ use std::env;
 // Enum to handle available shapes
 #[derive(Clone,Debug,PartialEq)]
 enum Shape{
-
+    Rock,
+    Paper,
+    Scissors,
 }
 
 // Enum to handle possible results
 #[derive(Debug)]
 enum GameResult{
-
+    Win,
+    Loss,
+    Draw,
 }
 
 // Use a match to get the correct points
 fn get_shape_points( player: &Shape) -> i32{
     match player{
-
+        Shape::Rock => 1,
+        Shape::Paper => 2,
+        Shape::Scissors => 3,
     }
 }
 
@@ -28,12 +34,31 @@ fn get_shape_points( player: &Shape) -> i32{
 fn get_result( player1: &Shape, player2: &Shape) -> i32{
 
     let result = match player1 == player2 {
+        true => {
+            GameResult::Draw
+        },
+        false => {
+            match (player1, player2){
+                // Rock
+                (Shape::Rock, Shape::Paper) => GameResult::Loss,
+                (Shape::Rock, Shape::Scissors) => GameResult::Win,
+                // Paper
+                (Shape::Paper, Shape::Rock) => GameResult::Win,
+                (Shape::Paper, Shape::Scissors) => GameResult::Loss,
+                // Scissors
+                (Shape::Scissors, Shape::Rock) => GameResult::Loss,
+                (Shape::Scissors, Shape::Paper) => GameResult::Win,
+                _ => panic!("Will not reach")
+            }
+        }
 
     };
 
     // Match on the result to get the correct score
     match result {
-
+        GameResult::Win => 6,
+        GameResult::Draw => 3,
+        GameResult::Loss => 0,
     }
 }
 
@@ -65,14 +90,18 @@ fn calculate_points (player1: &String, player2: &String) -> i32{
 
     // Match player 1 to get the Shape chosen
     let opt_1 = match player1.as_ref() {
-
+        "A" => Shape::Rock,
+        "B" => Shape::Paper,
+        "C" => Shape::Scissors,
         _ => panic!("Error"),
     };
     
 
     // Match Player2
     let opt_2 = match player2.as_ref() {
-
+        "X" => Shape::Rock,
+        "Y" => Shape::Paper,
+        "Z" => Shape::Scissors,
         _ => panic!("Error"),
     };
     
@@ -95,10 +124,7 @@ fn main() {
 
     let data = read_file(filename);
 
-    let points = data.iter()
-        .map(|x| calculate_points(&x[0], &x[1]))
-        .sum::<i32>();
-    
+    let points = data.iter().map(|x| calculate_points(&x[0], &x[1])).sum::<i32>();
     // assert!(points == 15);
     println!("Points = {}", points);
 

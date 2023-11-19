@@ -81,14 +81,25 @@ impl PointLike for Point2D{
 // Create a struct Planetary system that record the planet names and 
 // the x,y,z (Point3D) or x,y (Point2D) of each planet using generic types
 // Store both names and positions within vectors
-struct PlanetarySystem {
-
+struct PlanetarySystem <T> {
+    planet_location : Vec<T>,
+    planet_name : Vec<String>,
 }
 
 // Implement a function to print the distance between each planet and its star
 // Implement this for any generic type that implments the PointLike trait
 impl <T: PointLike> PlanetarySystem<T> {
-    print_distance_from_star
+    fn print_distance_from_star(self : &Self) -> (){
+        for i in 0..self.planet_location.len(){
+            let dist = self.planet_location[i].get_magnitude();
+            println!(
+                "Distance from {} to it's star: {} AU",
+                self.planet_name[i],
+                dist,
+            );
+
+        }
+    }
 
 }
 

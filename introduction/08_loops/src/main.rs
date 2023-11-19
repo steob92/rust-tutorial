@@ -6,7 +6,14 @@ fn main(){
     // skip the 3rd step
     // break when i goes above 10
     loop {
-
+        println!("{}", i);
+        i += 1;
+        if i == 2{
+            continue;
+        }
+        if i > 10{
+            break;
+        }
     }
 
 
@@ -21,7 +28,16 @@ fn main(){
         // prints out i,j one on each step
         // increases j by
         'kafka : loop{
+            if i > 10 {
+                break 'astra;
+            } else if j > 3 {
+                break 'kafka;
+            } else{
+                println!("{},{}", i,j);
+            }
+            j+=1;
 
         }
+        i+=1;
     }
 }

@@ -2,11 +2,11 @@ fn main() {
 
     let mut x = 42;
 
-    let y = x;
+    let y = &x;
 
     println!("y = {}", y);
 
-    let z: i32 = x;
+    let mut z: i32 = x;
     z += 1;
 
     println!("x = {}", x);
@@ -16,7 +16,7 @@ fn main() {
 
     {
         let a = y;
-        let another = x;
+        let another = &x;
         println!("a = {}", a);
         println!("another = {}", another);
     }
@@ -25,14 +25,14 @@ fn main() {
     println!("x = {}", x);
 
     {
-        let b  = &x;
+        let b  = &mut x;
         *b +=  10;
         println!("b = {}", b);
 
     }
 
     println!("x = {}", x);
-    let last = &x;
+    let last = &mut x;
     *last -= 100;
     println!("last = {}", last);
 }
